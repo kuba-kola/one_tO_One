@@ -1,5 +1,5 @@
 
-export const columns = ["Title", "Price", "Rest", "Count", "Counter", "Sum", "Delete"];
+export const columns = ["Title", "Price", "Counter", "Sum", "Delete"];
 
 export const allProducts = [
     {

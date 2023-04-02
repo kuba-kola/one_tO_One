@@ -23,7 +23,10 @@ const Counter = ({ min, max, onChange, current }) => {
         <div>
             <button
                 type="button"
-                onClick={dec}>
+                className="btn btn-outline-danger"
+                onClick={dec}
+                disabled={inputValue === min}
+            >
                 -
             </button>
             <input
@@ -39,7 +42,9 @@ const Counter = ({ min, max, onChange, current }) => {
             />
             <button
                 type="button"
+                className="btn btn-outline-success"
                 onClick={inc}
+                disabled={inputValue === max}
             >
                 +
             </button>

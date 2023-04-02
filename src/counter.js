@@ -1,34 +1,61 @@
-import React, { useState } from "react";
-import { number } from "prop-types";
+import React, { useEffect, useState } from "react";
+import { func, number } from "prop-types";
 
 
-const Counter = ({ min, max }) => {
-    const [current, setCurrent] = useState(min)
-    
-    const dec = () => {
-        setCurrent(Math.max(min, current - 1));
-    };
-    const inc = () => {
-        setCurrent(Math.min(max, current + 1));
-    };
+const Counter = ({ min, max, onChange, current }) => {
+    const [inputValue, setInputValue] = useState(current);
 
-    const setValue = (e) => {
-        const value = Math.min(max, Math.max(min, parseInt(e.target.value) || min));
-        setCurrent(value);
+    useEffect(() => {
+        setInputValue(current);
+    }, [current]);
+
+    const parseCurrent = () => {
+        const num = parseInt(inputValue);
+        setCurrent(isNaN(num) ? min : num);
     }
+
+    const setCurrent = (num) => onChange(Math.max(min, Math.min(max, num)));
+    
+    const dec = () =>  setCurrent(current - 1);
+    const inc = () => setCurrent(current + 1);
 
     return (
         <div>
-            <button onClick = {inc}>+</button>
-            <input value={current} onChange={setValue} />
-            <button onClick = {dec}>-</button>
+            <button
+                type="button"
+                onClick={dec}>
+                -
+            </button>
+            <input
+                type="number"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onBlur={parseCurrent}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      parseCurrent(e);
+                    }
+                  }}
+            />
+            <button
+                type="button"
+                onClick={inc}
+            >
+                +
+            </button>
         </div>
     )
 }
 
 Counter.propTypes = {
-    min: number.isRequired,
+    min: number,
     max: number.isRequired,
+    current: number.isRequired,
+    onChange: func.isRequired,
 };
+
+Counter.defaultProps = {
+    min: 0,
+}
 
 export default Counter;

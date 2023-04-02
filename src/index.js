@@ -1,15 +1,10 @@
 
 import React from 'react'; 
 import ReactDOM from 'react-dom'
-import Counter from './counter';
+import App from './App';
 
 
 ReactDOM.render(
-    <div> 
-        <Counter
-            min={0}
-            max={13}
-        />
-    </div>
+    <App />
     , document.getElementById('root')
 );

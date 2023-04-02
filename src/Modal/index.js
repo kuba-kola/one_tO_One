@@ -3,18 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useOutsideClick } from '../shared/hooks';
 
-const ModalWindpw = () =>  {
-  const [show, setShow] = useState(false);
+const ModalWindow = () =>  {
+    const [isShown, setIsShown] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-    
-  const wrapperRef = useRef(null);
-  useOutsideClick(wrapperRef, () => {
-    setShow(false)
-  });
-    
-  console.log(<Modal/>);
+    const handleShow = () => setIsShown(true);
+
+    const wrapperRef = useRef(null);
+
+    useOutsideClick(wrapperRef, () => {
+        setIsShown(false)
+    });
 
     return (
         <>
@@ -26,13 +24,10 @@ const ModalWindpw = () =>  {
             </Button>
             <div ref={wrapperRef}>
                 <Modal
-        
-                    show={show}
-                    onHide={handleClose}
+                    show={isShown}
                     backdrop="static"
-                    keyboard={false}
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                     <Modal.Title>Testing OutClick</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -44,4 +39,4 @@ const ModalWindpw = () =>  {
 );
 }
 
-export default ModalWindpw;
+export default ModalWindow;

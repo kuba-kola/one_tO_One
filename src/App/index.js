@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import uniqid from "uniqid";
 import { allProducts, columns } from '../shared/constants';
 import Counter from '../Counter';
-import ModalWindpw from '../Modal';
+import ModalWindow from '../Modal';
 
 const App = () => {
     const [products, setProducts] = useState(allProducts)
@@ -17,7 +18,7 @@ const App = () => {
     const totalSum = () =>  products.reduce((acc, item) => acc + item.price * item.cnt, 0);
 
     const renderItem = (prod) => (
-        <tr key={prod.id}>
+        <tr key={uniqid()}>
             <td>{prod.title}</td>
             <td>{prod.price}</td>
             <td>
@@ -31,7 +32,7 @@ const App = () => {
             <td>
                 <button
                     type="button"
-                    class="btn btn-danger"
+                    className="btn btn-danger"
                     onClick={() => removeItem(prod.id)}
                 >
                     X
@@ -56,7 +57,7 @@ const App = () => {
             <hr />
             <h1>Total: {totalSum()}</h1>
             <hr/>
-            <ModalWindpw />
+            <ModalWindow />
         </>
     )
 }

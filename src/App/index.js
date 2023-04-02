@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { allProducts, columns } from './constants';
-import Counter from './counter';
+import { allProducts, columns } from '../shared/constants';
+import Counter from '../Counter';
+import ModalWindpw from '../Modal';
 
 const App = () => {
     const [products, setProducts] = useState(allProducts)
@@ -30,6 +31,7 @@ const App = () => {
             <td>
                 <button
                     type="button"
+                    class="btn btn-danger"
                     onClick={() => removeItem(prod.id)}
                 >
                     X
@@ -51,7 +53,10 @@ const App = () => {
                     {products.map((field) => renderItem(field))}
                 </tbody>
             </table>
+            <hr />
             <h1>Total: {totalSum()}</h1>
+            <hr/>
+            <ModalWindpw />
         </>
     )
 }

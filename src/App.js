@@ -19,11 +19,8 @@ const App = () => {
         <tr key={prod.id}>
             <td>{prod.title}</td>
             <td>{prod.price}</td>
-            <td>{prod.rest}</td>
-            <td>{prod.cnt}</td>
             <td>
                 <Counter
-                    min={1}
                     max={prod.rest}
                     current={prod.cnt}
                     onChange={(cnt) => setCount(prod.id, cnt)}

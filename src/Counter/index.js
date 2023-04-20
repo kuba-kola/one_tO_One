@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { func, number } from "prop-types";
 
+import "./styles.css"
 
 const Counter = ({ min, max, onChange, current }) => {
-    const [inputValue, setInputValue] = useState(current);
+    const [inputValue, setInputValue] = useState("");
 
     useEffect(() => {
         setInputValue(current);
@@ -23,7 +24,7 @@ const Counter = ({ min, max, onChange, current }) => {
         <div>
             <button
                 type="button"
-                className="btn btn-outline-danger"
+                className="btn btn-danger min-btn"
                 onClick={dec}
                 disabled={inputValue === min}
             >
@@ -42,7 +43,7 @@ const Counter = ({ min, max, onChange, current }) => {
             />
             <button
                 type="button"
-                className="btn btn-outline-success"
+                className="btn btn-success my-btn plus-btn"
                 onClick={inc}
                 disabled={inputValue === max}
             >
@@ -60,7 +61,7 @@ Counter.propTypes = {
 };
 
 Counter.defaultProps = {
-    min: 0,
+    min: 1,
 }
 
 export default Counter;

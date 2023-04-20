@@ -1,0 +1,30 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    max-width: 550px;
+}
+
+.inputError {
+    display: flex;
+    height: 20px;
+    margin-top: 4px;
+}
+
+.form-control {
+    width: 300px;
+}
+
+.btn-container {
+    display: flex;
+    margin-top: 15px;
+    flex-direction: row;
+}
+
+.my-btn {
+    margin-right: 15px;
+}
+
+.text-danger {
+    font-size: 13px;
+}

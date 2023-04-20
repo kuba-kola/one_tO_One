@@ -1,5 +1,6 @@
 import React from "react";
 import uniqid from "uniqid";
+import { arrayOf, func, object } from "prop-types";
 import { columns } from "../../shared/constants";
 import Counter from "../../Counter";
 
@@ -79,5 +80,12 @@ const CartPage = ({
             </form>
     )
 }
+
+CartPage.propTypes = {
+    onChange: func.isRequired,
+    onRemove: func.isRequired,
+    onNext: func.isRequired,
+    products: arrayOf(object).isRequired,
+  };
 
 export default CartPage;

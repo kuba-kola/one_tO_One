@@ -1,5 +1,5 @@
 import React from "react";
-import { string } from "prop-types";
+import { arrayOf, func, object } from "prop-types";
 
 import "./styles.css"
 
@@ -11,7 +11,7 @@ const ResultPage = ({
     onPrev,
 }) => {
     const totalSum = () => products.reduce((acc, item) => acc + item.price * item.cnt, 0);
-    console.log(info)
+
     return (
         <form className="form-container">
             <h1>You order</h1>
@@ -42,15 +42,10 @@ const ResultPage = ({
 };
   
   ResultPage.propTypes = {
-    customerName: string,
-    customerEmail: string,
-    customerPhone: string,
-  };
-  
-  ResultPage.defaultProps = {
-    customerName: "John Doe",
-    customerEmail: "test@email.xom",
-    customerPhone: "508575226",
+    products: arrayOf(object).isRequired,
+    info: object.isRequired,
+    onNext: func.isRequired,
+    onPrev: func.isRequired,
   };
   
 export default ResultPage;

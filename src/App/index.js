@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { allProducts } from '../shared/constants';
 import FormPage from '../pages/FormPage';
 import ResultPage from '../pages/ResultPage';
-import Header from '../Header';
-
-import "./styles.css"
 import CartPage from '../pages/CartPage';
 
-const App = ({ onSubmit }) => {
+const App = () => {
     const [products, setProducts] = useState(allProducts)
     const [formData, setFormData] = useState({});
 
@@ -26,13 +23,10 @@ const App = ({ onSubmit }) => {
 
     const handleFormSubmit = (data) => {
         setFormData(data);
-      }
-
-   
+    }
 
     return (
         <div className="light"> 
-            <Header />
             {page === "cart" && (
                 <CartPage
                     products={products}

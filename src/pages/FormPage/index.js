@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from 'react';
 import uniqid from "uniqid";
+import { func } from "prop-types";
 import {
   phoneNumberFormatValidator,
   emailValidator,
   fullNameValidator,
 } from "../../shared/validators";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { useOutsideClick } from '../../shared/hooks';
 
 import "./styles.css"
 
@@ -17,6 +21,16 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
     email: null,
     phone: null,
   });
+  const [isShown, setIsShown] = useState(false);
+
+  const handleShow = () => setIsShown(true);
+
+  const wrapperRef = useRef(null);
+
+  useOutsideClick(wrapperRef, () => {
+      setIsShown(false)
+  });
+
 
   const validate = () => {
     const error = {
@@ -30,6 +44,7 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
   };
 
   const handleSubmit = () => {
+    debugger;
     if (validate()) {
       onSubmit({ name, email, phone });
       onNext();
@@ -84,13 +99,37 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
           <h1>Form</h1>
           {inputFields.map(field => renderInput(field))}
           <div className="btn-container">
-              <button
+              <Button
                 type="button"
                 className="btn btn-success my-btn"
-                onClick={handleSubmit}
+                onClick={handleShow}
               >
-                  Submit
-              </button>
+                Submit
+              </Button>
+              <div ref={wrapperRef}>
+                  <Modal
+                      show={isShown}
+                      backdrop="static"
+                  >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Confirm data</Modal.Title>
+                      </Modal.Header>
+
+                      <Modal.Body>
+                        <p>Do you confirm the sending of the data?</p>
+                      </Modal.Body>
+
+                      <Modal.Footer>
+                        <Button variant="secondary">Close</Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => handleSubmit()}
+                        >
+                          Submit
+                        </Button>
+                      </Modal.Footer>
+                  </Modal>
+              </div>
               <button
                   type="button"
                   className="btn btn-warning"
@@ -105,9 +144,9 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
 };
 
 FormPage.propTypes = {
-};
-
-FormPage.defaultProps = {
+  onSubmit: func.isRequired,
+  onPrev: func.isRequired,
+  onNext: func.isRequired,
 };
 
 export default FormPage;

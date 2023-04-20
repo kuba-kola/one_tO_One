@@ -1,122 +1,118 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { func } from "prop-types";
 
-const InputForm = () => {
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+import {
+  phoneNumberFormatValidator,
+  emailValidator,
+  fullNameValidator,
+} from "../shared/validators";
 
-  const firstNameValidation = () => {
-    const re = /^[A-Za-z]{2,}\s[A-Za-z]{2,}$/;
-    if (re.test(firstName)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+import "./styles.css"
 
-  const emailValidation = () => {
-    const re = /^\S+@\S+\.\S+$/;
-    if (re.test(email)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
-  const phoneValidation = () => {
-    const re = /^[0-9]{10}$/;
-    if (re.test(phone)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (firstNameValidation() && emailValidation() && phoneValidation()) {
-      alert("Form is valid!");
-    } else {
-      alert("Form is invalid!");
-    }
-  };
-
-  return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group as={Row} controlId="formBasicFirstName">
-        <Form.Label
-            column sm="3"
-            className="text-left"
-        >
-          First Name
-        </Form.Label>
-        <Col sm="9">
-          <Form.Control
-            type="text"
-            placeholder="Enter first name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            isInvalid={!firstNameValidation()}
+const FormInputs = ({ onSubmit }) => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [errors, setErrors] = useState({
+      name: null,
+      email: null,
+      phone: null,
+    });
+  
+    const validate = () => {
+      const phoneNumberFormatValid = phoneNumberFormatValidator(phone);
+      const error = {
+        name: (!fullNameValidator(name)) && "A full name must be present",
+        phone: (!phoneNumberFormatValid) && "A valid phone number is required.",
+        email: !emailValidator(email) && "A valid email address is required",
+      };
+      setErrors(error);
+      return !error.name && !error.email && !error.phone;
+    };
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+  
+      if (validate()) {
+        onSubmit({
+          name,
+          email,
+          phone,
+        });
+      }
+    };
+  
+    const handleNameChange = event => setName(event.target.value);
+    const handleEmailChange = event => setEmail(event.target.value);
+    const handlePhoneChange = event => setPhone(event.target.value);
+  
+  
+    const inputFields = [
+      {
+        label: "Full name",
+        value: name,
+        onChange: handleNameChange,
+        error: errors.name,
+      },
+      {
+        label: "Email address",
+        value: email,
+        onChange: handleEmailChange,
+        error: errors.email,
+      },
+      {
+        label: "Phone number",
+        value: phone,
+        onChange: handlePhoneChange,
+        error: errors.phone,
+      },
+    ];
+  
+    const renderInput = field => (
+        <div className="inputContainer">
+          <div className="form-group">
+              <label>{field.label}</label>
+              <span className="text-danger font-weight-bold">*</span>
+          </div>
+          <input
+              className="form-control"
+              type="text"
+              value={field.value}
+              onChange={field.onChange}
+              placeholder={field.label}
           />
-          <Form.Control.Feedback type="invalid">
-            First Name is not valid.
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
-
-      <Form.Group
-        as={Row}
-        controlId="formBasicEmail"
-      >
-        <Form.Label
-            column sm="3"
-            className="text-left"
-        >
-          Email
-        </Form.Label>
-        <Col sm="9">
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            isInvalid={!emailValidation()}
-          />
-          <Form.Control.Feedback type="invalid">
-            Email is not valid.
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
-
-      <Form.Group as={Row} controlId="formBasicPhone">
-        <Form.Label column sm="3" className="text-left">
-          Phone
-        </Form.Label>
-        <Col sm="9">
-          <Form.Control
-            type="text"
-            placeholder="Enter phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            isInvalid={!phoneValidation()}
-          />
-          <Form.Control.Feedback type="invalid">
-            Phone is not valid.
-          </Form.Control.Feedback>
-        </Col>
-      </Form.Group>
-
-      <Form.Group as={Row}>
-        <Col sm={{ span: 9, offset: 3 }}>
-          <Button type="submit" className="mr-2">
-            Confirm
-          </Button>
-          <Button type="reset">Back</Button>
-        </Col>
-      </Form.Group>
-    </Form>
-  );
-};
-
-export default InputForm;
+          <span className="text-danger inputError">{field.error}</span>
+        </div>
+    );
+  
+    return (
+        <form className="form-container" onSubmit={handleSubmit}>
+            <h1>Form</h1>
+            {inputFields.map(field => renderInput(field))}
+            <div className="btn-container">
+                <button
+                    type="submit"
+                    className="btn btn-success my-btn"
+                >
+                    Submit
+                </button>
+                <button
+                    type="submit"
+                    className="btn btn-warning"
+                >
+                    Back
+                </button>
+            </div>
+        </form>
+    );
+  };
+  
+  FormInputs.propTypes = {
+    onSubmit: func.isRequired,
+  };
+  
+  FormInputs.defaultProps = {
+  };
+  
+export default FormInputs;

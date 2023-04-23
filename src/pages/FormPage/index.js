@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import uniqid from "uniqid";
+import cx from "classnames";
 import { func } from "prop-types";
 import {
   phoneNumberFormatValidator,
@@ -78,7 +78,7 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
             <span className="text-danger font-weight-bold">*</span>
         </div>
         <input
-          className="form-control"
+          className={cx('form-control', { 'is-invalid': field.error })}
           type="text"
           value={field.value}
           onChange={field.onChange}

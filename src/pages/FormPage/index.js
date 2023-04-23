@@ -23,12 +23,10 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
   });
   const [isShown, setIsShown] = useState(false);
 
-  const handleShow = () => setIsShown(true);
-
   const wrapperRef = useRef(null);
 
   useOutsideClick(wrapperRef, () => {
-      setIsShown(false)
+    setIsShown(false)
   });
 
 
@@ -39,21 +37,17 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
       email: !emailValidator(email) && "A valid email address is required",
     };
     setErrors(error);
-    debugger;
     return !error.name && !error.email && !error.phone;
   };
 
   const handleSubmit = () => {
-    debugger;
-    if (validate()) {
-      onSubmit({ name, email, phone });
-      onNext();
-    }
+    onSubmit({ name, email, phone });
+    onNext();
   };
 
-  const handleNameChange = event => setName(event.target.value);
-  const handleEmailChange = event => setEmail(event.target.value);
-  const handlePhoneChange = event => setPhone(event.target.value);
+  const handleNameChange = (e) => setName(e.target.value);
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePhoneChange = (e) => setPhone(e.target.value);
 
 
   const inputFields = [
@@ -78,17 +72,17 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
   ];
 
   const renderInput = field => (
-    <div className="inputContainer" key={uniqid()}>
+    <div className="inputContainer" key={field.label}>
         <div className="form-group">
             <label>{field.label}</label>
             <span className="text-danger font-weight-bold">*</span>
         </div>
         <input
-            className="form-control"
-            type="text"
-            value={field.value}
-            onChange={field.onChange}
-            placeholder={field.label}
+          className="form-control"
+          type="text"
+          value={field.value}
+          onChange={field.onChange}
+          placeholder={field.label}
         />
          <span className="text-danger inputError">{field.error}</span>
       </div>
@@ -102,7 +96,11 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
               <Button
                 type="button"
                 className="btn btn-success my-btn"
-                onClick={handleShow}
+                onClick={() => {
+                  if (validate()) {
+                    setIsShown(true)
+                  }
+                }}
               >
                 Submit
               </Button>
@@ -122,6 +120,7 @@ const FormPage = ({onSubmit, onPrev, onNext}) => {
                       <Modal.Footer>
                         <Button variant="secondary">Close</Button>
                         <Button
+                          type="button"
                           variant="primary"
                           onClick={() => handleSubmit()}
                         >

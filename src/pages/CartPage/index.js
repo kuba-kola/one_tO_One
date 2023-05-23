@@ -2,7 +2,7 @@ import React from "react";
 import uniqid from "uniqid";
 import { arrayOf, func, object } from "prop-types";
 import { columns } from "../../shared/constants";
-import Counter from "../../Counter";
+import Counter from "../../components/Counter";
 
 import "./styles.css"
 

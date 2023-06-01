@@ -21,10 +21,6 @@ const App = () => {
         setProducts(products.filter((item) => item.id !== id))
     }
 
-    const handleFormSubmit = (data) => {
-        setFormData(data);
-    }
-
     return (
         <div className="light"> 
             {page === "cart" && (
@@ -37,7 +33,6 @@ const App = () => {
             )}
             {page === "form" && (
                 <FormPage
-                    onSubmit={handleFormSubmit}
                     onNext={moveToResult}
                     onPrev={moveToCart}
                 />

@@ -1,71 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { func } from "prop-types";
-import {
-  phoneNumberFormatValidator,
-  emailValidator,
-  fullNameValidator,
-} from "../../shared/validators";
+import { observer } from 'mobx-react-lite';
+import useStore  from '../../hooks/useStore';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import "./styles.css"
 
-const FormPage = ({ onSubmit, onPrev, onNext }) => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
-  const [errors, setErrors] = useState({
-    name: null,
-    email: null,
-    phone: null,
-  });
+const FormPage = observer(({ onPrev, onNext }) => {
+  const [ orderStore ] = useStore('order')
   const [isShown, setIsShown] = useState(false);
-
-  const validate = () => {
-    const error = {
-      name: (!fullNameValidator(form.name)) && "A full name must be present",
-      phone: (!phoneNumberFormatValidator(form.phone)) && "A valid phone number is required.",
-      email: !emailValidator(form.email) && "A valid email address is required",
-    };
-    setErrors(error);
-    return !error.name && !error.email && !error.phone;
-  };
-
-  const handleSubmit = () => {
-    onSubmit({ ...form });
-    onNext();
-  };
-
-  const handleChange = (name, value) => {
-    setForm({
-      ...form,
-      [name]: value
-    });
-  };
-
-
-  const inputFields = [
-    {
-      label: "Full name",
-      value: form.name,
-      onChange: (e) => handleChange('name', e.target.value),
-      error: errors.name,
-    },
-    {
-      label: "Email address",
-      value: form.email,
-      onChange: (e) => handleChange('email', e.target.value),
-      error: errors.email,
-    },
-    {
-      label: "Phone number",
-      value: form.phone,
-      onChange: (e) => handleChange('phone', e.target.value),
-      error: errors.phone,
-    },
-  ];
 
   const renderInput = field => (
     <div className="inputContainer" key={field.label}>
@@ -77,23 +21,27 @@ const FormPage = ({ onSubmit, onPrev, onNext }) => {
         className="form-control"
         type="text"
         value={field.value}
-        onChange={field.onChange}
+        onChange={(e) => orderStore.handle(field.name, e.target.value)}
         placeholder={field.label}
       />
-      <span className="text-danger inputError">{field.error}</span>
+      {!field.valid && (
+        <span className="text-danger inputError">
+        {`${field.label} must be present`}
+        </span>
+      )}
     </div>
   );
 
   return (
     <form className="form-container">
       <h1>Form</h1>
-      {inputFields.map(field => renderInput(field))}
+      {orderStore.form.map(field => renderInput(field))}
       <div className="btn-container">
         <Button
           type="button"
           className="btn btn-success my-btn"
           onClick={() => {
-            if (validate()) {
+            if (orderStore.validation) {
               setIsShown(true)
             }
           }}
@@ -123,7 +71,7 @@ const FormPage = ({ onSubmit, onPrev, onNext }) => {
               <Button
                 type="button"
                 variant="primary"
-                onClick={() => handleSubmit()}
+                onClick={() => onNext()}
               >
                 Submit
               </Button>
@@ -140,7 +88,7 @@ const FormPage = ({ onSubmit, onPrev, onNext }) => {
       </div>
     </form>
   );
-};
+});
 
 FormPage.propTypes = {
   onSubmit: func.isRequired,

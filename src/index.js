@@ -1,16 +1,16 @@
 
 import React from 'react'; 
 import ReactDOM from 'react-dom'
-// import StoreContext from './contexts/store'
-import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import RootStore from './store';
+import App from './App';
+import StoreContext from './contexts/store'
+import RootStore from './store'
 
-// const store = new RootStore();
+const store = new RootStore();
 
 ReactDOM.render(
-    // <StoreContext.Provider value={store}>
+    <StoreContext.Provider value={store}>
         <App />
-    // </StoreContext.Provider>
+    </StoreContext.Provider>
     , document.getElementById('root')
 );

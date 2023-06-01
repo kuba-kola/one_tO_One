@@ -61,7 +61,7 @@ Counter.propTypes = {
 };
 
 Counter.defaultProps = {
-    min: 1,
+    min: 0,
 }
 
 export default Counter;

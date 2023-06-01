@@ -1,19 +1,17 @@
 import React from "react";
 import uniqid from "uniqid";
 import { arrayOf, func, object } from "prop-types";
+import { observer } from 'mobx-react-lite';
+import useStore from '../../hooks/useStore';
 import { columns } from "../../shared/constants";
-import Counter from "../../Counter";
+import Counter from "../../components/Counter";
 
 import "./styles.css"
 
-const CartPage = ({
-    products,
-    onChange,
-    onRemove,
+const CartPage = observer(({
     onNext
 }) => {
-    
-    const totalSum = () => products.reduce((acc, item) => acc + item.price * item.cnt, 0);
+    const [ cartStore ] = useStore('cart');
 
     const renderItem = (prod) => (
         <tr key={uniqid()}>
@@ -23,7 +21,7 @@ const CartPage = ({
                 <Counter
                     max={prod.rest}
                     current={prod.cnt}
-                    onChange={(cnt) => onChange(prod.id, cnt)}
+                    onChange={(cnt) => cartStore.onChange(prod.id, cnt)}
                 />
             </td>
             <td>${prod.price * prod.cnt}</td>
@@ -31,14 +29,14 @@ const CartPage = ({
                 <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={() => onRemove(prod.id)}
+                    onClick={() => cartStore.onRemove(prod.id)}
                 >
                     X
                 </button>
                 <button
                     type="button"
                     className="btn btn-warning max-btn"
-                    onClick={() => onChange(prod.id, prod.rest)}
+                    onClick={() => cartStore.onChange(prod.id, prod.rest)}
                 >
                     MAX
                 </button>
@@ -48,38 +46,38 @@ const CartPage = ({
 
     return (
         <form className="form-container">
-                <h1>Products</h1>
-                <table>
-                    <tbody>
-                        <tr>
-                            {columns.map((title) =>
-                                <th>{title}</th>
-                            )}
-                        </tr>
-                        {products.map((field) => renderItem(field))}
-                    </tbody>
-                </table>
-                <hr />
-                {products.length === 0 && (
-                    <>
-                        <h4>Empty</h4>
-                        <hr />
-                    </>
-                )}
-                <h1>Total: ${totalSum()}</h1>
-                <hr />
-                <div className="btn-container">
-                    <button
-                        type="button"
-                        className="btn btn-success my-btn"
-                        onClick={onNext}
-                    >
-                        Submit
-                    </button>
-                </div>
-            </form>
+            <h1>Products</h1>
+            <table>
+                <tbody>
+                    <tr>
+                        {columns.map((title) =>
+                            <th>{title}</th>
+                        )}
+                    </tr>
+                    {cartStore.products.map((field) => renderItem(field))}
+                </tbody>
+            </table>
+            <hr />
+            {cartStore.products.length === 0 && (
+                <>
+                    <h4>Empty</h4>
+                    <hr />
+                </>
+            )}
+            <h1>Total: ${cartStore.total}</h1>
+            <hr />
+            <div className="btn-container">
+                <button
+                    type="button"
+                    className="btn btn-success my-btn"
+                    onClick={onNext}
+                >
+                    Submit
+                </button>
+            </div>
+        </form>
     )
-}
+});
 
 CartPage.propTypes = {
     onChange: func.isRequired,

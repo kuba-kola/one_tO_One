@@ -91,7 +91,6 @@ const FormPage = observer(({ onPrev, onNext }) => {
 });
 
 FormPage.propTypes = {
-  onSubmit: func.isRequired,
   onPrev: func.isRequired,
   onNext: func.isRequired,
 };

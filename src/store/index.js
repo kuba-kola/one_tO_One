@@ -4,6 +4,6 @@ import Cart from './cart'
 export default class RootStore{
 	constructor(){
 		this.order = new Order();
-		// this.cart = new Cart();
+		this.cart = new Cart();
 	}
 }

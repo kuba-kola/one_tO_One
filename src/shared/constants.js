@@ -1,3 +1,4 @@
+import { emailValidator, fullNameValidator, phoneNumberFormatValidator } from './validators';
 
 export const columns = ["Title", "Price", "", "Sum", "Delete"];
 
@@ -50,5 +51,29 @@ export const products = [
         price: 89,
         rest: 8,
         cnt: 0,
+    },
+];
+
+export const fields = [
+    {
+        name: "name",
+        label: "Full Name",
+        value: "",
+        valid: false,
+        validator: fullNameValidator,
+    },
+    {
+        name: "email",
+        label: "Email",
+        value: "",
+        valid: false,
+        validator: emailValidator,
+    },
+    {
+        name: "phone",
+        label: "Phone",
+        value: "",
+        valid: false,
+        validator: phoneNumberFormatValidator,
     },
 ];

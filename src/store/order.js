@@ -1,35 +1,22 @@
 import { makeAutoObservable } from 'mobx';
-import { emailValidator, fullNameValidator, phoneNumberFormatValidator } from '../shared/validators';
+import { fields } from '../shared/constants';
 
 export default class Order {
 
-	form = [
-		{
-			name: "name",
-			label: "Full Name",
-			value: "",
-			valid: false,
-			pattern: fullNameValidator,
-		},
-		{
-			name: "email",
-			label: "Email",
-			value: "",
-			valid: false,
-			pattern: emailValidator,
-		},
-		{
-			name: "phone",
-			label: "Phone",
-			value: "",
-			valid: false,
-			pattern: phoneNumberFormatValidator,
-		},
-	];
+	form = fields;
+
+	handle = (name, value) => {
+		const field = this.form.find(f => f.name === name);
+
+		if (field) {
+			field.value = value;
+			field.valid = field.validator(field.value);
+		}
+	}
 
 	get validation() {
 		return this.form.every(f => f.valid);
-	}
+	};
 
 	get data() {
 		let res = {};
@@ -39,18 +26,9 @@ export default class Order {
 		});
 
 		return res;
-	}
-
-	handle = (name, value) => {
-		const field = this.form.find(f => f.name === name);
-
-		if (field) {
-			field.value = value.trim();
-			field.valid = field.pattern(field.value);
-		}
-	}
+	};
 
 	constructor() {
 		makeAutoObservable(this);
-	}
+	};
 }

@@ -1,9 +1,9 @@
 import Order from './order'
-import Cart from './cart'
+import Products from './products'
 
 export default class RootStore{
 	constructor(){
 		this.order = new Order();
-		this.cart = new Cart();
+		this.products = new Products();
 	}
 }

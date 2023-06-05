@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { products } from '../shared/constants';
 
-export default class Cart{
+export default class Products{
 
 	products = products;
 

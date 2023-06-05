@@ -31,6 +31,18 @@ const App = () => {
             )}
         </div>
     )
+
+    // const App = () => {
+    //     return (
+    //         <div className="light">
+    //             <Routes>
+    //                 <Route path="/" element={<CartPage />} />
+    //                 <Route path="/form" element={<FormPage />} />
+    //                 <Route path="/result" element={<ResultPage />} />
+    //             </Routes>
+    //         </div>
+    //     )
+    // }
 }
 
 export default App;

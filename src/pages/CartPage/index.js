@@ -11,7 +11,7 @@ import "./styles.css"
 const CartPage = observer(({
     onNext
 }) => {
-    const [ cartStore ] = useStore('cart');
+    const [ productsStore ] = useStore('products');
 
     const renderItem = (prod) => (
         <tr key={uniqid()}>
@@ -21,7 +21,7 @@ const CartPage = observer(({
                 <Counter
                     max={prod.rest}
                     current={prod.cnt}
-                    onChange={(cnt) => cartStore.onChange(prod.id, cnt)}
+                    onChange={(cnt) => productsStore.onChange(prod.id, cnt)}
                 />
             </td>
             <td>${prod.price * prod.cnt}</td>
@@ -29,14 +29,14 @@ const CartPage = observer(({
                 <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={() => cartStore.onRemove(prod.id)}
+                    onClick={() => productsStore.onRemove(prod.id)}
                 >
                     X
                 </button>
                 <button
                     type="button"
                     className="btn btn-warning max-btn"
-                    onClick={() => cartStore.onChange(prod.id, prod.rest)}
+                    onClick={() => productsStore.onChange(prod.id, prod.rest)}
                 >
                     MAX
                 </button>
@@ -54,17 +54,17 @@ const CartPage = observer(({
                             <th>{title}</th>
                         )}
                     </tr>
-                    {cartStore.products.map((field) => renderItem(field))}
+                    {productsStore.products.map((field) => renderItem(field))}
                 </tbody>
             </table>
             <hr />
-            {cartStore.products.length === 0 && (
+            {productsStore.products.length === 0 && (
                 <>
                     <h4>Empty</h4>
                     <hr />
                 </>
             )}
-            <h1>Total: ${cartStore.total}</h1>
+            <h1>Total: ${productsStore.total}</h1>
             <hr />
             <div className="btn-container">
                 <button

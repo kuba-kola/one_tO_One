@@ -6,12 +6,12 @@ import useStore from '../../hooks/useStore';
 import "./styles.css"
 
 
-const ResultPage = ({
+const ResultPage = observer(({
     products,
     onNext,
     onPrev,
 }) => {
-    const [cartStore, orderStore] = useStore("cart", "order");
+    const [cartStore, orderStore] = useStore("products", "order");
 
     return (
         <form className="form-container">
@@ -40,7 +40,7 @@ const ResultPage = ({
             </div>
         </form>
     )
-};
+});
   
   ResultPage.propTypes = {
     products: arrayOf(object).isRequired,

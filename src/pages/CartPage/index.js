@@ -1,16 +1,14 @@
 import React from "react";
 import uniqid from "uniqid";
-import { arrayOf, func, object } from "prop-types";
 import { observer } from 'mobx-react-lite';
 import useStore from '../../hooks/useStore';
 import { columns } from "../../shared/constants";
 import Counter from "../../components/Counter";
 
 import "./styles.css"
+import { Link } from "react-router-dom";
 
-const CartPage = observer(({
-    onNext
-}) => {
+const CartPage = observer(() => {
     const [ productsStore ] = useStore('products');
 
     const renderItem = (prod) => (
@@ -67,23 +65,16 @@ const CartPage = observer(({
             <h1>Total: ${productsStore.total}</h1>
             <hr />
             <div className="btn-container">
-                <button
-                    type="button"
+                <Link
                     className="btn btn-success my-btn"
-                    onClick={onNext}
-                >
+                    to="/form">
                     Submit
-                </button>
+                </Link>
             </div>
         </form>
     )
 });
 
-CartPage.propTypes = {
-    onChange: func.isRequired,
-    onRemove: func.isRequired,
-    onNext: func.isRequired,
-    products: arrayOf(object).isRequired,
-  };
+CartPage.propTypes = {};
 
 export default CartPage;

@@ -1,16 +1,12 @@
 import React from "react";
-import { arrayOf, func, object } from "prop-types";
 import { observer } from 'mobx-react-lite';
 import useStore from '../../hooks/useStore';
 
 import "./styles.css"
+import { Link } from "react-router-dom";
 
 
-const ResultPage = observer(({
-    products,
-    onNext,
-    onPrev,
-}) => {
+const ResultPage = observer(() => {
     const [cartStore, orderStore] = useStore("products", "order");
 
     return (
@@ -23,29 +19,21 @@ const ResultPage = observer(({
             <h5>{orderStore.data.name}, {orderStore.data.email}, {orderStore.data.phone}</h5>
                 
             <div className="btn-container">
-                <button
-                    type="button"
+                <Link
                     className="btn btn-success my-btn"
-                    onClick={onNext}
-                >
+                    to="/">
                     Submit
-                </button>
-                <button
-                    type="button"
+                </Link>
+                <Link
                     className="btn btn-warning"
-                    onClick={onPrev}
-                >
+                    to="/form">
                     Back
-                </button>
+                </Link>
             </div>
         </form>
     )
 });
   
-  ResultPage.propTypes = {
-    products: arrayOf(object).isRequired,
-    onNext: func.isRequired,
-    onPrev: func.isRequired,
-  };
+  ResultPage.propTypes = {};
   
 export default ResultPage;

@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import { func } from "prop-types";
+import React, { useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
+import { useOutsideClick } from '../../shared/hooks';
 import useStore  from '../../hooks/useStore';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import "./styles.css"
 
-const FormPage = observer(({ onPrev, onNext }) => {
+const FormPage = observer(() => {
   const [ orderStore ] = useStore('order')
   const [isShown, setIsShown] = useState(false);
+
+  const wrapperRef = useRef(null);
+
+  useOutsideClick(wrapperRef, () => {
+    setIsShown(false)
+  });
 
   const renderInput = field => (
     <div className="inputContainer" key={field.label}>
@@ -48,19 +55,24 @@ const FormPage = observer(({ onPrev, onNext }) => {
         >
           Submit
         </Button>
-        <div>
-          <Modal
-            show={isShown}
-            backdrop="static"
-          >
+        <Link
+          className="btn btn-warning"
+          to="/">
+          Back
+        </Link>
+      </div>
+      {isShown && (
+        <Modal
+          show
+          backdrop="static"
+        >
+          <div ref={wrapperRef}>
             <Modal.Header>
               <Modal.Title>Confirm data</Modal.Title>
             </Modal.Header>
-
             <Modal.Body>
               <p>Do you confirm the sending of the data?</p>
             </Modal.Body>
-
             <Modal.Footer>
               <Button
                 variant="secondary"
@@ -68,31 +80,19 @@ const FormPage = observer(({ onPrev, onNext }) => {
               >
                 Close
               </Button>
-              <Button
-                type="button"
-                variant="primary"
-                onClick={() => onNext()}
-              >
+              <Link
+                className="btn btn-primary"
+                to="/result">
                 Submit
-              </Button>
+              </Link>
             </Modal.Footer>
-          </Modal>
-        </div>
-        <button
-          type="button"
-          className="btn btn-warning"
-          onClick={() => onPrev()}
-        >
-          Back
-        </button>
-      </div>
+          </div>
+        </Modal>
+      )}
     </form>
   );
 });
 
-FormPage.propTypes = {
-  onPrev: func.isRequired,
-  onNext: func.isRequired,
-};
+FormPage.propTypes = {};
 
 export default FormPage;

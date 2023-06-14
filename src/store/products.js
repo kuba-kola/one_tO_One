@@ -26,5 +26,5 @@ export default class Products{
 
 	constructor(){
 		makeAutoObservable(this);
-	}
+	};
 }

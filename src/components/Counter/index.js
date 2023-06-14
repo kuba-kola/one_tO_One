@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { func, number } from "prop-types";
+import { number } from "prop-types";
 
 import "./styles.css"
 
@@ -21,10 +21,10 @@ const Counter = ({ min, max, onChange, current }) => {
     const inc = () => setCurrent(current + 1);
 
     return (
-        <div>
+        <div className="countContainer">
             <button
                 type="button"
-                className="btn btn-danger min-btn"
+                className="btn btn-danger"
                 onClick={dec}
                 disabled={inputValue === min}
             >
@@ -32,6 +32,7 @@ const Counter = ({ min, max, onChange, current }) => {
             </button>
             <input
                 type="number"
+                className="counterInput"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onBlur={parseCurrent}
@@ -43,7 +44,7 @@ const Counter = ({ min, max, onChange, current }) => {
             />
             <button
                 type="button"
-                className="btn btn-success my-btn plus-btn"
+                className="btn btn-success"
                 onClick={inc}
                 disabled={inputValue === max}
             >
@@ -56,8 +57,6 @@ const Counter = ({ min, max, onChange, current }) => {
 Counter.propTypes = {
     min: number,
     max: number.isRequired,
-    current: number.isRequired,
-    onChange: func.isRequired,
 };
 
 Counter.defaultProps = {

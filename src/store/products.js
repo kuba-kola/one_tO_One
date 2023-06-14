@@ -9,10 +9,14 @@ export default class Products{
 		return this.products.reduce((acc, item) => acc + item.price * item.cnt, 0);
 	};
 
+	get inCart() {
+		return this.products.reduce((acc, item) => acc + item.cnt, 0);
+	};
+
 	onChange = (id, cnt) => {
 		const product = this.products.find(pr => pr.id === id)
 		if (product) {
-			product.cnt = Math.max(1, Math.min(product.rest, cnt));
+			product.cnt = cnt === 0 ? 0 : Math.max(1, Math.min(product.rest, cnt));
 		}
 	}
 

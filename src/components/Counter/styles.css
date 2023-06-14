@@ -21,14 +21,18 @@
     flex-direction: row;
 }
 
-.min-btn {
-    margin-right: 15px;
-}
-
-.plus-btn {
-    margin-left: 15px;
-}
-
 .text-danger {
     font-size: 13px;
+}
+
+.countContainer {
+    display: flex;
+    margin: 5px;
+    justify-content: center;
+
+}
+
+.counterInput {
+    text-align: center;
+    margin: 0 15px;
 }

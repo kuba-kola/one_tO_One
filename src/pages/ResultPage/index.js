@@ -13,7 +13,7 @@ const ResultPage = observer(() => {
         <form className="form-container">
             <h1>You order</h1>
             <hr />
-            <h3>In you order: {cartStore.products.length} items</h3>
+            <h3>In you order: {cartStore.inCart} items</h3>
             <h3>Total cost: ${cartStore.total}</h3>
             <hr />
             <h5>{orderStore.data.name}, {orderStore.data.email}, {orderStore.data.phone}</h5>

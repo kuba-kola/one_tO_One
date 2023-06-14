@@ -1,0 +1,31 @@
+.carContainer {
+    display: flex;
+    padding-right: 30px;
+}
+
+.header-logo {
+    display: flex;
+    padding-left: 30px;
+}
+
+.active-link {
+    font-weight: 700;
+}
+
+.prices {
+    display: flex;
+    flex-direction: column;
+}
+
+.totalProducts {
+    display: flex;
+    position: absolute;
+    min-width: 24px;
+    bottom: -10%;
+    right: 20px;
+    border-radius: 100px;
+    color: white;
+    background: #dc3545;
+    align-items: center;
+    justify-content: center;
+}

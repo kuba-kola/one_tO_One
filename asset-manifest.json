@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/one_tO_One/static/css/main.837e1ddc.css",
+    "main.js": "/one_tO_One/static/js/main.e884295b.js",
+    "index.html": "/one_tO_One/index.html",
+    "main.837e1ddc.css.map": "/one_tO_One/static/css/main.837e1ddc.css.map",
+    "main.e884295b.js.map": "/one_tO_One/static/js/main.e884295b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.837e1ddc.css",
+    "static/js/main.e884295b.js"
+  ]
+}
